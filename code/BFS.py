@@ -18,9 +18,15 @@ class BFS:
 
     def bfs(self, graph, source):
         queue = deque()
-        queue.append(source)
-        self.marked[source] = True
-        self.distTo[source] = 0
+        if isinstance(source, list):
+            for ele in source:
+                queue.append(ele)
+                self.marked[ele] = True
+                self.distTo[ele] = 0
+        else:
+            queue.append(source)
+            self.marked[source] = True
+            self.distTo[source] = 0
         while queue:
             curr = queue.popleft()
             for w in graph.adjacent(curr):
@@ -29,6 +35,7 @@ class BFS:
                     self.distTo[w] = self.distTo[curr] + 1
                     self.marked[w] = True
                     queue.append(w)
+
 
     def hasPathTo(self, v):
         return self.marked[v]
